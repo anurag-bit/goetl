@@ -1,4 +1,5 @@
 // formatter/jsonl.go
+// Package formatter provides functions to format data into  jsonl 
 package formatter
 
 import (

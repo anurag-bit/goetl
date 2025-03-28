@@ -1,4 +1,5 @@
 // extractor/pdf.go
+// Package extractor provides functions to extract text from pdfs and aggreate data
 package extractor
 
 import (

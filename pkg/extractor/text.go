@@ -1,4 +1,5 @@
 // extractor/text.go
+// Package extractor provides functions to extract text from txt files and aggregate data
 package extractor
 
 import (
