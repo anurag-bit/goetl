@@ -5,9 +5,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/anurag-bit/goetl/extractor"
-	"github.com/anurag-bit/goetl/formatter"
-	"github.com/anurag-bit/goetl/processor"
+	"github.com/anurag-bit/goetl/pkg/extractor"
+	"github.com/anurag-bit/goetl/pkg/formatter"
+	"github.com/anurag-bit/goetl/pkg/processor"
 )
 
 func main() {
