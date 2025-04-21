@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goetl
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: goetl
+  template:
+    metadata:
+      labels:
+        app: goetl
+    spec:
+      containers:
+      - name: goetl
+        image: yourrepo/goetl:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: REDIS_URL
+          value: "redis://redis:6379" # Example for distributed queue
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        readinessProbe:
+          httpGet:
+            path: /api/ping
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /api/ping
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goetl-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: goetl
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

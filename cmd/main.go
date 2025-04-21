@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -13,6 +14,7 @@ import (
 	"github.com/anurag-bit/goetl/pkg/load"
 	"github.com/anurag-bit/goetl/pkg/parser"
 	"github.com/anurag-bit/goetl/pkg/processor"
+	"github.com/gin-gonic/gin"
 )
 
 const version = "1.1.0"
@@ -33,7 +35,138 @@ func printProgressBar(prefix string, current, total int) {
 	}
 }
 
+// ETLRequest defines the JSON structure for API requests.
+type ETLRequest struct {
+	InputPath   string `json:"input"`
+	OutputPath  string `json:"output"`
+	ChunkSize   int    `json:"chunksize"`
+	Overlap     int    `json:"overlap"`
+	Format      string `json:"format"`
+	DBURL       string `json:"dburl"`
+	Instruction string `json:"instruction"`
+	Parse       bool   `json:"parse"`
+	Semantic    bool   `json:"semantic"`
+	SemanticOut string `json:"semanticout"`
+}
+
+// ETLResponse defines the JSON structure for API responses.
+type ETLResponse struct {
+	Status     string `json:"status"`
+	Message    string `json:"message"`
+	OutputPath string `json:"output,omitempty"`
+	Elapsed    string `json:"elapsed,omitempty"`
+	Error      string `json:"error,omitempty"`
+}
+
+// etlHandler handles ETL jobs via API.
+func etlHandler(c *gin.Context) {
+	var req ETLRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, ETLResponse{Status: "error", Message: "Invalid request", Error: err.Error()})
+		return
+	}
+	startTime := time.Now()
+
+	// Validate input
+	if req.InputPath == "" {
+		c.JSON(http.StatusBadRequest, ETLResponse{Status: "error", Message: "Input path required"})
+		return
+	}
+	if _, err := os.Stat(req.InputPath); os.IsNotExist(err) {
+		c.JSON(http.StatusBadRequest, ETLResponse{Status: "error", Message: "Input path does not exist"})
+		return
+	}
+
+	// Semantic codebase analysis mode
+	if req.Semantic {
+		fm := load.NewFileManager(req.InputPath)
+		err := fm.ProcessCodebase(req.SemanticOut)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, ETLResponse{Status: "error", Message: "Semantic analysis error", Error: err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, ETLResponse{
+			Status:     "success",
+			Message:    "Semantic graph saved",
+			OutputPath: req.SemanticOut,
+			Elapsed:    time.Since(startTime).Truncate(time.Millisecond).String(),
+		})
+		return
+	}
+
+	// Extraction
+	ext := strings.ToLower(filepath.Ext(req.InputPath))
+	var rawText string
+	var err error
+	switch ext {
+	case ".txt":
+		rawText, err = extractor.ExtractTextFile(req.InputPath)
+	case ".pdf":
+		rawText, err = extractor.ExtractPDFText(req.InputPath)
+	default:
+		c.JSON(http.StatusBadRequest, ETLResponse{Status: "error", Message: "Unsupported file type"})
+		return
+	}
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ETLResponse{Status: "error", Message: "Extraction error", Error: err.Error()})
+		return
+	}
+
+	// Optional: Parse and analyze
+	if req.Parse {
+		// No-op for API, but could return stats if needed
+	}
+
+	// Transform (Clean & Chunk)
+	cleanText := processor.CleanText(rawText)
+	chunks := processor.ChunkTextBySearchableTokens(cleanText, req.ChunkSize, req.Overlap)
+
+	// Load/Format
+	switch strings.ToLower(req.Format) {
+	case "jsonl":
+		err = formatter.FormatToJSONL(chunks, req.OutputPath, req.Instruction)
+	case "csv":
+		err = load.LoadToCSV(chunks, req.OutputPath)
+	case "postgres":
+		err = load.LoadToPostgres(chunks, req.DBURL)
+	case "mysql":
+		err = load.LoadToMySQL(chunks, req.DBURL)
+	case "sqlite":
+		err = load.LoadToSQLite(chunks, req.OutputPath)
+	case "mongodb":
+		err = load.LoadToMongoDB(chunks, req.DBURL)
+	case "redis":
+		err = load.LoadToRedis(chunks, req.DBURL)
+	default:
+		c.JSON(http.StatusBadRequest, ETLResponse{Status: "error", Message: "Unsupported output format"})
+		return
+	}
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ETLResponse{Status: "error", Message: "Load/format error", Error: err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, ETLResponse{
+		Status:     "success",
+		Message:    "ETL completed",
+		OutputPath: req.OutputPath,
+		Elapsed:    time.Since(startTime).Truncate(time.Millisecond).String(),
+	})
+}
+
 func main() {
+	// If run with no CLI flags, start API server
+	if len(os.Args) == 1 {
+		r := gin.Default()
+		r.POST("/api/etl", etlHandler)
+		r.GET("/api/ping", func(c *gin.Context) {
+			c.JSON(200, gin.H{"message": "pong", "version": version})
+		})
+		fmt.Printf("GOETL API server running on http://localhost:8080\n")
+		r.Run(":8080")
+		return
+	}
+
 	startTime := time.Now()
 
 	// CLI flags
