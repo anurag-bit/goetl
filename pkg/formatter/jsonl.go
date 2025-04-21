@@ -15,6 +15,21 @@ type InstructionSample struct {
 }
 
 // FormatToJSONL writes chunked data to a JSONL file with instruction structure
+// FormatToJSONL formats a slice of text chunks into a JSONL (JSON Lines) file.
+// Each chunk is wrapped in an InstructionSample structure that includes:
+// - An instruction string formatted with the chunk's index
+// - An empty input field
+// - The chunk content as output
+//
+// Parameters:
+//   - chunks: A slice of strings to be formatted as individual JSONL entries
+//   - outputPath: Path where the JSONL file will be written
+//   - instructionTemplate: A format string where %d will be replaced with the chunk index (1-based)
+//
+// Returns:
+//   - error: If file creation, JSON marshaling, or file writing operations fail
+//
+// The function writes each JSON object on a separate line in the output file.
 func FormatToJSONL(chunks []string, outputPath string, instructionTemplate string) error {
 	file, err := os.Create(outputPath)
 	if err != nil {

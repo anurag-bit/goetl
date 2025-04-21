@@ -1,4 +1,5 @@
-// extractor/pdf.go
+// Package extractor
+// /pdf.go
 // Package extractor provides functions to extract text from pdfs and aggreate data
 package extractor
 
@@ -9,6 +10,16 @@ import (
 )
 
 // ExtractPDFText extracts text from all pages of a PDF file.
+// ExtractPDFText extracts text content from a PDF file at the given path.
+// It processes all pages in the PDF and concatenates their text content,
+// separated by newlines.
+//
+// Parameters:
+//   - pdfPath: The file path to the PDF to be processed
+//
+// Returns:
+//   - string: The extracted text content from all PDF pages
+//   - error: An error if the PDF file cannot be opened or processed
 func ExtractPDFText(pdfPath string) (string, error) {
 	r, err := pdf.Open(pdfPath)
 	if err != nil {

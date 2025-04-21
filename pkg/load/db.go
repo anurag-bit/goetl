@@ -5,7 +5,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"log"
 	"os"
 	
 	_ "github.com/go-sql-driver/mysql" // MySQL driver
@@ -107,6 +106,20 @@ func LoadToSQLite(data []string, dbPath string) error {
 	return nil
 }
 // LoadToMySQL loads data into a MySQL database	
+// LoadToMySQL writes the provided data to a MySQL database.
+// The function connects to the MySQL database using the provided dbURL connection string,
+// creates a 'documents' table if it doesn't exist, and then inserts each string in the data slice
+// as a new row in the 'documents' table.
+//
+// Parameters:
+//   - data: A slice of strings, each string will be inserted as content in a separate row.
+//   - dbURL: MySQL connection string in the format "username:password@protocol(address)/dbname".
+//
+// Returns:
+//   - error: An error if any step fails (connection, table creation, data insertion),
+//     or nil if the operation is successful.
+//
+// Note: This function requires the MySQL driver to be imported as "mysql".
 func LoadToMySQL(data []string, dbURL string) error {
 	// Connect to the database
 	db, err := sql.Open("mysql", dbURL)
@@ -164,7 +177,7 @@ func LoadToRedis(data []string, redisURL string) error {
 	defer client.Close()
 
 	for i, chunk := range data {
-		err := client.Set(fmt.Sprintf("document:%d", i), chunk, 0).Err()
+		err := client.Set(context.TODO(), fmt.Sprintf("document:%d", i), chunk, 0).Err()
 		if err != nil {
 			return fmt.Errorf("failed to insert data into Redis: %v", err)
 		}

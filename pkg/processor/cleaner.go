@@ -7,6 +7,19 @@ import (
 )
 
 // CleanText performs basic cleaning on the input text.
+// CleanText normalizes and cleans text by removing excessive whitespace and standardizing line endings.
+// It performs the following operations:
+// - Trims leading and trailing whitespace
+// - Replaces tabs with spaces
+// - Normalizes line endings (CRLF and CR to LF)
+// - Collapses multiple newlines into a single newline
+// - Collapses multiple spaces into a single space
+//
+// Parameters:
+//   - text: The input string to clean
+//
+// Returns:
+//   - The cleaned and normalized string
 func CleanText(text string) string {
 	// Remove extra whitespace and normalize newlines
 	text = strings.TrimSpace(text)
