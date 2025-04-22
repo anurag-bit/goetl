@@ -1,0 +1,9 @@
+:8080
+
+root * /app/webui/build
+file_server
+
+# Proxy API requests to Go backend
+handle_path /api/* {
+    reverse_proxy localhost:8081
+}

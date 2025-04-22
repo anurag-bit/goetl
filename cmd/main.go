@@ -162,8 +162,8 @@ func main() {
 		r.GET("/api/ping", func(c *gin.Context) {
 			c.JSON(200, gin.H{"message": "pong", "version": version})
 		})
-		fmt.Printf("GOETL API server running on http://localhost:8080\n")
-		r.Run(":8080")
+		fmt.Printf("GOETL API server running on http://localhost:8081\n")
+		r.Run(":8081")
 		return
 	}
 

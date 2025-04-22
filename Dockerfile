@@ -1,5 +1,5 @@
 # Build Go binary
-FROM golang:1.21-alpine AS builder
+FROM golang:1.24.1-alpine AS builder
 WORKDIR /app
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o goetl ./cmd/main.go
@@ -15,9 +15,21 @@ RUN cd webui && npm run build
 # Final minimal image
 FROM alpine:latest
 WORKDIR /app
+
+# Install Caddy
+RUN apk add --no-cache caddy
+
 COPY --from=builder /app/goetl .
 COPY --from=ui-builder /ui/webui/build ./webui/build
+
+# Caddyfile for static + API reverse proxy
+COPY Caddyfile /etc/caddy/Caddyfile
+
 ENV UI_STATIC_DIR=/app/webui/build
 EXPOSE 8080
+
+# NOTE: Make sure your Go backend listens on port 8081, not 8080!
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s CMD wget --spider -q http://localhost:8080/api/ping || exit 1
-CMD ["./goetl"]
+
+# Run both Go backend and Caddy
+CMD ["sh", "-c", "./goetl & caddy run --config /etc/caddy/Caddyfile --adapter caddyfile"]
