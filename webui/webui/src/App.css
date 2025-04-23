@@ -1,39 +1,67 @@
+/* -----------------------------
+   1. Theme Variables
+----------------------------- */
 :root {
-  --primary: #4a6fa5;
-  --secondary: #166088;
-  --success: #28a745;
-  --danger: #dc3545;
-  --light: #f8f9fa;
-  --dark: #212529;
-  --border-radius: 4px;
-  --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  --transition-speed: 0.3s;
+  /* Colors - Apple & firecrawl.dev inspired */
+  --primary: #0071e3;
+  --secondary: #34c759;
+  --accent: #ff9500;
+  --background: #f5f5f7;
+  --card-bg: #ffffff;
+  --text-primary: #1d1d1f;
+  --text-secondary: #86868b;
+  --border-color: #d2d2d7;
+  --error: #ff3b30;
+  --success: #34c759;
+  
+  /* UI properties */
+  --border-radius: 8px;
+  --box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --transition-speed: 0.25s;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
+/* -----------------------------
+   2. Global Styles
+----------------------------- */
 body {
-  background-color: #f5f7fa;
-  color: var(--dark);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
+  background-color: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
 }
 
+h1 {
+  font-weight: 600;
+  font-size: 1.8rem;
+  margin: 0;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* -----------------------------
+   3. Layout Components
+----------------------------- */
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 2rem auto;
   padding: 2rem;
-  background-color: white;
-  border-radius: 8px;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  animation: scaleIn 0.4s ease-out;
+  animation: scaleIn 0.3s ease-out;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .logo {
@@ -47,6 +75,14 @@ body {
   font-size: 1.8rem;
 }
 
+.header div:last-child {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* -----------------------------
+   4. Form Elements
+----------------------------- */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -58,32 +94,29 @@ body {
   transition: all var(--transition-speed);
 }
 
-.form-group:hover {
-  transform: translateX(3px);
-}
-
 .form-group.full-width {
   grid-column: 1 / -1;
-}
-
-.form-group.full-width:hover {
-  transform: translateY(-2px);
 }
 
 label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: var(--dark);
+  color: var(--text-primary);
+  font-size: 0.9rem;
 }
 
 input, select, textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  font-size: 1rem;
-  transition: all 0.2s;
+  font-size: 0.95rem;
+  font-family: var(--font-family);
+  color: var(--text-primary);
+  background-color: var(--card-bg);
+  transition: all var(--transition-speed);
+  box-sizing: border-box;
 }
 
 input:hover, select:hover, textarea:hover {
@@ -93,8 +126,7 @@ input:hover, select:hover, textarea:hover {
 input:focus, select:focus, textarea:focus {
   border-color: var(--primary);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
-  transform: scale(1.01);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
 }
 
 .checkbox-group {
@@ -105,6 +137,7 @@ input:focus, select:focus, textarea:focus {
 
 .checkbox-group input {
   width: auto;
+  accent-color: var(--primary);
 }
 
 button {
@@ -113,112 +146,33 @@ button {
   color: white;
   border: none;
   border-radius: var(--border-radius);
-  font-size: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
+  transition: all var(--transition-speed);
+  margin: 1rem 0;
 }
 
 button:hover {
-  background-color: var(--secondary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  background-color: #0059b3;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 button:active {
   transform: translateY(0);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 button:disabled {
-  background-color: #b3b3b3;
+  background-color: var(--text-secondary);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
-button::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 5px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.5);
-  opacity: 0;
-  border-radius: 100%;
-  transform: scale(1, 1) translate(-50%);
-  transform-origin: 50% 50%;
-}
-
-button:focus:not(:active)::after {
-  animation: ripple 1s ease-out;
-}
-
-.card {
-  padding: 1.5rem;
-  border-radius: var(--border-radius);
-  margin-top: 1.5rem;
-  box-shadow: var(--box-shadow);
-  animation: fadeIn 0.5s;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.success-card {
-  background-color: #e8f5e9;
-  border-left: 4px solid var(--success);
-}
-
-.error-card {
-  background-color: #ffebee;
-  border-left: 4px solid var(--danger);
-}
-
-.format-options {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 10px;
-  margin-top: 0.5rem;
-}
-
-.format-option {
-  padding: 0.6rem;
-  border: 1px solid #ddd;
-  border-radius: var(--border-radius);
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.format-option:hover {
-  border-color: var(--primary);
-  transform: translateY(-3px);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-
-.format-option.selected {
-  background-color: var(--primary);
-  color: white;
-  border-color: var(--primary);
-  transform: scale(1.05);
-}
-
-.format-option .icon {
-  font-size: 1.5rem;
-  margin-bottom: 0.3rem;
-  transition: transform 0.3s;
-}
-
-.format-option:hover .icon {
-  transform: scale(1.2);
-}
-
+/* -----------------------------
+   5. Progress Indicator
+----------------------------- */
 .progress-indicator {
   display: flex;
   justify-content: space-between;
@@ -229,7 +183,6 @@ button:focus:not(:active)::after {
   flex: 1;
   text-align: center;
   position: relative;
-  transition: all 0.3s;
 }
 
 .step:not(:last-child)::after {
@@ -239,7 +192,7 @@ button:focus:not(:active)::after {
   right: -50%;
   width: 100%;
   height: 2px;
-  background-color: #ddd;
+  background-color: var(--border-color);
   z-index: 1;
   transition: background-color 0.5s ease;
 }
@@ -252,21 +205,21 @@ button:focus:not(:active)::after {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  background-color: #ddd;
+  width: 24px;
+  height: 24px;
+  background-color: var(--border-color);
   border-radius: 50%;
   margin-bottom: 8px;
   position: relative;
   z-index: 2;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s;
+  font-size: 0.8rem;
 }
 
 .step.active .step-number {
   background-color: var(--primary);
   color: white;
-  transform: scale(1.2);
-  box-shadow: 0 0 0 5px rgba(74, 111, 165, 0.2);
+  transform: scale(1.1);
 }
 
 .step.completed .step-number {
@@ -275,54 +228,105 @@ button:focus:not(:active)::after {
 }
 
 .step-label {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
   transition: all 0.3s;
 }
 
 .step.active .step-label {
-  font-weight: bold;
+  background-color: var(--success);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: var(--border-color);
+  border-radius: 50%;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s;
+  font-size: 0.8rem;
+}
+
+.step.active .step-number {
+  background-color: var(--primary);
+  color: white;
+  transform: scale(1.1);
+}
+
+.step.completed .step-number {
+  background-color: var(--success);
+  color: white;
+}
+
+.step-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  transition: all 0.3s;
+}
+
+.step.active .step-label {
+  font-weight: 500;
   color: var(--primary);
 }
 
-@keyframes pulse {
-  0% { opacity: 0.6; transform: scale(0.98); }
-  50% { opacity: 1; transform: scale(1.02); }
-  100% { opacity: 0.6; transform: scale(0.98); }
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 .loading-indicator {
-  animation: fadeIn 0.5s;
   text-align: center;
   padding: 2rem;
 }
 
 .loading-spinner {
   display: inline-block;
-  width: 50px;
-  height: 50px;
-  border: 3px solid rgba(74, 111, 165, 0.3);
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(0, 113, 227, 0.2);
   border-radius: 50%;
   border-top-color: var(--primary);
   margin-bottom: 1rem;
-  animation: spin 1s infinite linear;
+  animation: spin 0.8s infinite linear;
+}
+
+/* Add/enhance animations */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideIn {
-  from { transform: translateX(-20px); opacity: 0; }
+  from { transform: translateX(-10px); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
 
 @keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
+  from { transform: scale(0.98); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Drag and drop area */
+.drag-active {
+  background-color: rgba(0, 113, 227, 0.05);
+  border: 2px dashed var(--primary) !important;
+  border-radius: var(--border-radius);
+  transition: all 0.3s;
 }
