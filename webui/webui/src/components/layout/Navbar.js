@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
-import { FiSun, FiMoon, FiMenu, FiX, FiAlertCircle, FiCheck, FiLoader } from "react-icons/fi";
+import { FiSun, FiMoon, FiMenu, FiX, FiAlertCircle, FiCheck, FiLoader, FiGlobe } from "react-icons/fi";
 
 const Navbar = ({ apiStatus }) => {
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
@@ -13,7 +13,8 @@ const Navbar = ({ apiStatus }) => {
     { name: "Dashboard", path: "/dashboard" },
     { name: "New Job", path: "/job/new" },
     { name: "System Status", path: "/system" },
-    { name: "Documentation", path: "/docs" }
+    { name: "Documentation", path: "/docs" },
+    { name: "Project Website", path: "https://anurag-bit.github.io/goetl", external: true, icon: <FiGlobe size={16} /> }
   ];
 
   // Get appropriate status icon
@@ -39,6 +40,18 @@ const Navbar = ({ apiStatus }) => {
 
         <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
           {navLinks.map((link) => (
+            link.external ? 
+            <a 
+              key={link.path}
+              href={link.path}
+              className="external-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {link.name} {link.icon}
+            </a>
+            :
             <Link 
               key={link.path}
               to={link.path}

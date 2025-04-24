@@ -2,6 +2,10 @@
 
 **GOETL** is a modern, extensible ETL (Extract, Transform, Load) utility designed for preparing datasets for LLM (Large Language Model) training and analytics. It supports both CLI and REST API modes, and comes with a sleek React-based web UI for interactive dataset preparation.
 
+## 🌐 Project Website
+
+Visit our project website: [https://anurag-bit.github.io/goetl](https://anurag-bit.github.io/goetl)
+
 ---
 
 ## 🚀 Features
@@ -129,7 +133,7 @@ npm start
 - Automated Docker builds and pushes via GitHub Actions.
 - See [`.github/workflows/docker-image.yml`](.github/workflows/docker-image.yml).
 
----
+--- 
 
 ## 📝 License
 
@@ -156,5 +160,3 @@ Please open an issue for feature requests or bug reports.
 
 - Author: [Anurag Singh](https://github.com/anurag-bit)
 - Repo: [https://github.com/anurag-bit/goetl](https://github.com/anurag-bit/goetl)
-
----

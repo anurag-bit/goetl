@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOETL - Modern ETL for LLM Data Preparation</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="#" class="logo">
+                    <span class="logo-icon">📦</span>
+                    <h1>GOETL</h1>
+                </a>
+
+                <div class="navbar-links">
+                    <a href="#features" class="active">Features</a>
+                    <a href="#architecture">Architecture</a>
+                    <a href="#quickstart">Quick Start</a>
+                    <a href="#documentation">Documentation</a>
+                    <a href="#contribute">Contribute</a>
+                </div>
+
+                <div class="navbar-right">
+                    <a href="https://github.com/anurag-bit/goetl" class="github-link">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>📦 GOETL</h1>
+            <h2>Modern ETL for LLM Dataset Preparation</h2>
+            <p>Extract, transform, and load your data efficiently for Large Language Model training and analytics</p>
+            <div class="cta-buttons">
+                <a href="#quickstart" class="btn btn-primary">Get Started</a>
+                <a href="https://github.com/anurag-bit/goetl" class="btn btn-secondary">View on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>🚀 Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-file-import"></i></div>
+                    <h3>Extract</h3>
+                    <p>Extract text from .pdf and .txt files easily</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-magic"></i></div>
+                    <h3>Transform</h3>
+                    <p>Clean, tokenize, and chunk text for LLM-friendly datasets</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-database"></i></div>
+                    <h3>Load</h3>
+                    <p>Output to JSONL, CSV, or directly to databases</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-code"></i></div>
+                    <h3>Semantic Analysis</h3>
+                    <p>Generate semantic graphs from code directories</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-server"></i></div>
+                    <h3>REST API</h3>
+                    <p>Run as a web service for programmatic or UI-driven ETL</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-desktop"></i></div>
+                    <h3>Web UI</h3>
+                    <p>Intuitive React frontend for easy job configuration</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="architecture" class="architecture">
+        <div class="container">
+            <h2>🏗️ Architecture</h2>
+            <div class="architecture-diagram">
+                <img src="assets/architecture.svg" alt="GOETL Architecture" class="arch-image">
+            </div>
+            <div class="architecture-details">
+                <div class="arch-component">
+                    <h3>Go Backend</h3>
+                    <p>High-performance ETL engine and REST API</p>
+                </div>
+                <div class="arch-component">
+                    <h3>React Frontend</h3>
+                    <p>User-friendly web UI</p>
+                </div>
+                <div class="arch-component">
+                    <h3>Caddy</h3>
+                    <p>Serves static UI and reverse-proxies API requests</p>
+                </div>
+                <div class="arch-component">
+                    <h3>Docker & Kubernetes</h3>
+                    <p>Containerized and orchestratable</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="quickstart" class="quickstart">
+        <div class="container">
+            <h2>⚡ Quick Start</h2>
+            <div class="code-tabs">
+                <div class="tab-header">
+                    <button class="tab-btn active" data-tab="docker">Docker</button>
+                    <button class="tab-btn" data-tab="cli">CLI</button>
+                    <button class="tab-btn" data-tab="api">REST API</button>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="docker-tab">
+                        <pre><code>docker build -t anuragsingh086/goetl:latest .
+docker run -p 8080:8080 -v $(pwd)/samples:/data anuragsingh086/goetl:latest</code></pre>
+                        <p>Web UI: <a href="http://localhost:8080">http://localhost:8080</a><br>
+                        API: <a href="http://localhost:8080/api/etl">http://localhost:8080/api/etl</a></p>
+                    </div>
+                    <div class="tab-pane" id="cli-tab">
+                        <pre><code>go run ./cmd/main.go -input samples/demo.pdf -output output/data.jsonl -format jsonl</code></pre>
+                    </div>
+                    <div class="tab-pane" id="api-tab">
+                        <pre><code>POST /api/etl
+
+{
+  "input": "/data/demo.pdf",
+  "output": "output/data.jsonl",
+  "chunksize": 200,
+  "overlap": 20,
+  "format": "jsonl"
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="documentation" class="documentation">
+        <div class="container">
+            <h2>📚 Documentation</h2>
+            <div class="doc-grid">
+                <a href="#" class="doc-card">
+                    <div class="doc-icon"><i class="fas fa-book"></i></div>
+                    <h3>User Guide</h3>
+                    <p>Learn how to use GOETL effectively</p>
+                </a>
+                <a href="#" class="doc-card">
+                    <div class="doc-icon"><i class="fas fa-code"></i></div>
+                    <h3>API Reference</h3>
+                    <p>Complete API documentation</p>
+                </a>
+                <a href="#" class="doc-card">
+                    <div class="doc-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Tutorials</h3>
+                    <p>Step-by-step guides for common tasks</p>
+                </a>
+                <a href="#" class="doc-card">
+                    <div class="doc-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Examples</h3>
+                    <p>Real-world examples and use cases</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contribute" class="contribute">
+        <div class="container">
+            <h2>💡 Contribute</h2>
+            <p>We welcome contributions from the community!</p>
+            <div class="contribute-options">
+                <a href="https://github.com/anurag-bit/goetl/issues" class="contribute-card">
+                    <div class="contribute-icon"><i class="fas fa-bug"></i></div>
+                    <h3>Report Issues</h3>
+                    <p>Help us improve by reporting bugs</p>
+                </a>
+                <a href="https://github.com/anurag-bit/goetl/pulls" class="contribute-card">
+                    <div class="contribute-icon"><i class="fas fa-code-branch"></i></div>
+                    <h3>Pull Requests</h3>
+                    <p>Submit your code contributions</p>
+                </a>
+                <a href="#" class="contribute-card">
+                    <div class="contribute-icon"><i class="fas fa-star"></i></div>
+                    <h3>Star on GitHub</h3>
+                    <p>Show your support for the project</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-icon">📦</span>
+                    <h2>GOETL</h2>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h3>Project</h3>
+                        <ul>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#architecture">Architecture</a></li>
+                            <li><a href="#quickstart">Quick Start</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#documentation">Documentation</a></li>
+                            <li><a href="https://github.com/anurag-bit/goetl">GitHub</a></li>
+                            <li><a href="#contribute">Contribute</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 GOETL. MIT License.</p>
+                <p>Created by <a href="https://github.com/anurag-bit">Anurag Singh</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
