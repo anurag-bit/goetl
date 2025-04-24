@@ -75,6 +75,7 @@
   border-radius: 2px;
 }
 
+/* API status in navbar */
 .api-status {
   display: flex;
   align-items: center;
@@ -103,6 +104,23 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
+}
+
+.status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
+}
+
+.spin-animation {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
 }
 
 /* Footer Styling */

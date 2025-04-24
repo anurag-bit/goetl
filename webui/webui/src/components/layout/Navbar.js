@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
-import { FiSun, FiMoon, FiMenu, FiX } from "react-icons/fi";
+import { FiSun, FiMoon, FiMenu, FiX, FiAlertCircle, FiCheck, FiLoader } from "react-icons/fi";
 
-const Navbar = ({ apiStatus = "connected" }) => {
-  const { isDarkMode, toggleTheme } = useContext(ThemeContext) || { isDarkMode: false, toggleTheme: () => {} };
+const Navbar = ({ apiStatus }) => {
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -12,8 +12,22 @@ const Navbar = ({ apiStatus = "connected" }) => {
     { name: "Home", path: "/" },
     { name: "Dashboard", path: "/dashboard" },
     { name: "New Job", path: "/job/new" },
+    { name: "System Status", path: "/system" },
     { name: "Documentation", path: "/docs" }
   ];
+
+  // Get appropriate status icon
+  const getStatusIcon = () => {
+    switch(apiStatus) {
+      case "connected": 
+        return <FiCheck size={12} />;
+      case "checking": 
+        return <FiLoader size={12} className="spin-animation" />;
+      case "error":
+      default: 
+        return <FiAlertCircle size={12} />;
+    }
+  };
 
   return (
     <nav className="navbar">
@@ -41,12 +55,14 @@ const Navbar = ({ apiStatus = "connected" }) => {
             <span className="status-dot"></span>
             {apiStatus === "connected" ? "API Online" : 
              apiStatus === "checking" ? "Connecting..." : "API Offline"}
+            <span className="status-icon">{getStatusIcon()}</span>
           </div>
 
           <button 
             className="theme-toggle" 
             onClick={toggleTheme} 
             aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
           >
             {isDarkMode ? <FiSun /> : <FiMoon />}
           </button>

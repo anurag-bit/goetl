@@ -1,0 +1,410 @@
+/* Military-grade engineering style system status page */
+
+/* Base container styles */
+.system-status.military-grade {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 1.5rem;
+  background-color: var(--system-bg);
+  color: var(--system-text);
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  letter-spacing: 0.02rem;
+}
+
+/* Dark theme for system status page */
+.system-status.military-grade {
+  --system-bg: #161921;
+  --system-panel-bg: #1e222e;
+  --system-panel-header: #242836;
+  --system-text: #e0e2ea;
+  --system-text-dim: #7f8396;
+  --system-border: #343949;
+  --system-green: #00cb51;
+  --system-amber: #ff9500;
+  --system-red: #ff3b30;
+  --system-blue: #0080ff;
+  --system-purple: #bf5af2;
+}
+
+/* Status header */
+.status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid var(--system-amber);
+  padding-left: 1rem;
+}
+
+.status-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--system-text);
+  letter-spacing: 0.05rem;
+}
+
+.system-id {
+  font-size: 0.8rem;
+  color: var(--system-text-dim);
+  margin-top: 0.25rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.timestamp-display {
+  text-align: right;
+}
+
+.timestamp-label {
+  font-size: 0.7rem;
+  color: var(--system-text-dim);
+  margin-bottom: 0.25rem;
+}
+
+.timestamp {
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.system-status-indicator {
+  padding: 0.5rem 1rem;
+  border-radius: 2px;
+  font-weight: 500;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+/* Metrics grid layout */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.lower-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Panel styles */
+.metric-panel {
+  background-color: var(--system-panel-bg);
+  border: 1px solid var(--system-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.panel-header {
+  background-color: var(--system-panel-header);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--system-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
+
+.panel-id {
+  font-size: 0.75rem;
+  color: var(--system-text-dim);
+}
+
+.panel-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.control-button {
+  background: none;
+  border: 1px solid var(--system-border);
+  color: var(--system-text);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.control-button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  transform: none;
+}
+
+/* Resource metrics */
+.resource-metrics-content {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.resource-metric {
+  display: grid;
+  grid-template-columns: 200px 1fr 60px;
+  align-items: center;
+  gap: 1rem;
+}
+
+.resource-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.resource-icon {
+  color: var(--system-text-dim);
+  font-size: 1.25rem;
+}
+
+.resource-name {
+  font-size: 0.8rem;
+  color: var(--system-text-dim);
+}
+
+.resource-bar-container {
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.resource-bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.resource-bar.normal {
+  background-color: var(--system-green);
+}
+
+.resource-bar.medium {
+  background-color: var(--system-amber);
+}
+
+.resource-bar.high {
+  background-color: var(--system-red);
+}
+
+.resource-value {
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+/* System info grid */
+.system-info-grid {
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.info-item {
+  border: 1px solid var(--system-border);
+  padding: 0.75rem;
+  border-radius: 2px;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.info-label {
+  font-size: 0.7rem;
+  color: var(--system-text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.info-value {
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.15rem;
+}
+
+/* Performance metrics */
+.metrics-inner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background-color: var(--system-border);
+}
+
+.metric-box {
+  background-color: var(--system-panel-bg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.metric-box-label {
+  font-size: 0.7rem;
+  color: var(--system-text-dim);
+  margin-bottom: 0.75rem;
+}
+
+.metric-box-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.metric-trend {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+}
+
+.metric-trend.success {
+  color: var(--system-green);
+}
+
+.metric-trend.neutral {
+  color: var(--system-blue);
+}
+
+.metric-trend.warning {
+  color: var(--system-amber);
+}
+
+.metric-trend.danger {
+  color: var(--system-red);
+}
+
+/* System logs */
+.log-container {
+  padding: 0;
+  height: 250px;
+  overflow-y: auto;
+  background-color: #131519;
+}
+
+.log-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.log-table thead tr {
+  background-color: var(--system-panel-header);
+  position: sticky;
+  top: 0;
+}
+
+.log-table th {
+  padding: 0.5rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--system-border);
+  color: var(--system-text-dim);
+  font-weight: 500;
+}
+
+.log-table td {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.log-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.log-timestamp {
+  color: var(--system-text-dim);
+  font-size: 0.75rem;
+  width: 180px;
+}
+
+.log-level {
+  width: 80px;
+  font-weight: 500;
+}
+
+tr.info .log-level {
+  color: var(--system-blue);
+}
+
+tr.warn .log-level {
+  color: var(--system-amber);
+}
+
+tr.error .log-level {
+  color: var(--system-red);
+}
+
+tr.debug .log-level {
+  color: var(--system-purple);
+}
+
+/* Footer banner */
+.footer-banner {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--system-panel-header);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--system-border);
+  border-radius: 2px;
+  font-size: 0.8rem;
+}
+
+.footer-section {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.footer-label {
+  color: var(--system-text-dim);
+}
+
+.footer-value {
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .metrics-grid,
+  .lower-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .resource-metric {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .system-info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .metrics-inner-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-banner {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

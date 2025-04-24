@@ -9,19 +9,32 @@ import JobForm from "./pages/JobForm";
 import JobResult from "./pages/JobResult";
 import Documentation from "./pages/Documentation";
 import NotFound from "./pages/NotFound";
-import "./App.css";
+import SystemStatus from "./pages/SystemStatus";
 
 function App() {
   const [apiStatus, setApiStatus] = useState("checking");
 
-  // Check API connectivity on startup
+  // Check API connectivity on startup and at regular intervals
   useEffect(() => {
     const checkApiStatus = async () => {
       try {
-        const response = await fetch("/api/ping");
+        setApiStatus("checking"); // Set status to checking during request
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+        
+        const response = await fetch("/api/ping", { 
+          signal: controller.signal,
+          headers: { 'Cache-Control': 'no-cache' }
+        });
+        
+        clearTimeout(timeoutId);
+        
         if (response.ok) {
+          const data = await response.json();
+          console.log("API connected, version:", data.version);
           setApiStatus("connected");
         } else {
+          console.warn("API returned error status:", response.status);
           setApiStatus("error");
         }
       } catch (err) {
@@ -30,8 +43,13 @@ function App() {
       }
     };
     
+    // Check immediately on mount
     checkApiStatus();
-    const interval = setInterval(checkApiStatus, 30000);
+    
+    // Then check periodically
+    const interval = setInterval(checkApiStatus, 30000); // Check every 30 seconds
+    
+    // Clean up interval on component unmount
     return () => clearInterval(interval);
   }, []);
 
@@ -47,6 +65,7 @@ function App() {
               <Route path="/job/new" element={<JobForm />} />
               <Route path="/job/result/:id" element={<JobResult />} />
               <Route path="/docs" element={<Documentation />} />
+              <Route path="/system" element={<SystemStatus />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
