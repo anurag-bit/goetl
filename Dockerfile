@@ -7,9 +7,12 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o goetl ./cmd/main.
 # Build React UI
 FROM node:20-alpine AS ui-builder
 WORKDIR /ui
+# Set Node options to handle OpenSSL issues with newer Node versions
+ENV NODE_OPTIONS=--openssl-legacy-provider
 COPY webui/webui/package*.json ./webui/
 RUN cd webui && npm install
 COPY webui/webui ./webui
+
 RUN cd webui && npm run build
 
 # Final minimal image
