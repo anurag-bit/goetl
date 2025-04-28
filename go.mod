@@ -43,7 +43,6 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/gin-gonic/gin v1.10.0
@@ -52,5 +51,5 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/mattn/go-sqlite3 v1.14.28
 	go.mongodb.org/mongo-driver v1.17.3
-	rsc.io/pdf v0.1.1 // indirect
+	rsc.io/pdf v0.1.1
 )

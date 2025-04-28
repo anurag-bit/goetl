@@ -1,0 +1,155 @@
+<!-- filepath: d:\GOETL\docs\assets\architecture.svg -->
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    /* Base styles */
+    text {
+      font-family: 'Inter', sans-serif;
+      fill: #333;
+    }
+    .dark-mode text { fill: #e1e1e1; }
+    
+    /* Title and labels */
+    .title { font-size: 24px; font-weight: bold; }
+    .subtitle { font-size: 14px; fill: #666; }
+    .dark-mode .subtitle { fill: #b0b0b0; }
+    .component-title { font-size: 18px; font-weight: bold; }
+    .component-description { font-size: 13px; fill: #666; }
+    .dark-mode .component-description { fill: #b0b0b0; }
+    
+    /* Component boxes */
+    .component { 
+      stroke-width: 2px;
+      rx: 12;
+      ry: 12;
+    }
+    .go-component { fill: #3498db; stroke: #2980b9; }
+    .react-component { fill: #2ecc71; stroke: #27ae60; }
+    .caddy-component { fill: #9b59b6; stroke: #8e44ad; }
+    .docker-component { fill: #95a5a6; stroke: #7f8c8d; }
+    .arrow { stroke-width: 2.5; stroke: #34495e; fill: none; marker-end: url(#arrowhead); }
+    .dark-mode .arrow { stroke: #ecf0f1; }
+    
+    /* Component icons */
+    .icon-bg { 
+      fill: white;
+      rx: 15;
+      ry: 15;
+    }
+    .dark-mode .icon-bg { fill: #2c3e50; }
+    
+    /* Animation */
+    @keyframes pulse {
+      0% { opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { opacity: 0.7; }
+    }
+    .pulse {
+      animation: pulse 2s infinite ease-in-out;
+    }
+  </style>
+
+  <!-- Definitions -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#34495e" />
+    </marker>
+    
+    <!-- Go icon -->
+    <symbol id="go-icon" viewBox="0 0 50 50">
+      <path d="M8,20 C8,17 11,12 21,12 C31,12 38,17 38,27 C38,37 31,42 21,42 C11,42 8,37 8,34" stroke="#2980b9" stroke-width="3" fill="none" />
+      <circle cx="16" cy="24" r="4" fill="#2980b9" />
+      <circle cx="32" cy="24" r="4" fill="#2980b9" />
+    </symbol>
+    
+    <!-- React icon -->
+    <symbol id="react-icon" viewBox="0 0 50 50">
+      <ellipse cx="25" cy="25" rx="20" ry="7" stroke="#27ae60" stroke-width="2" fill="none" transform="rotate(0 25 25)" />
+      <ellipse cx="25" cy="25" rx="20" ry="7" stroke="#27ae60" stroke-width="2" fill="none" transform="rotate(60 25 25)" />
+      <ellipse cx="25" cy="25" rx="20" ry="7" stroke="#27ae60" stroke-width="2" fill="none" transform="rotate(120 25 25)" />
+      <circle cx="25" cy="25" r="5" fill="#27ae60" />
+    </symbol>
+    
+    <!-- Caddy icon -->
+    <symbol id="caddy-icon" viewBox="0 0 50 50">
+      <path d="M10,15 L40,15 L40,40 L10,40 Z" fill="none" stroke="#8e44ad" stroke-width="2" />
+      <path d="M15,15 L15,10 L45,10 L45,35 L40,35" fill="none" stroke="#8e44ad" stroke-width="2" />
+      <path d="M20,25 L30,25 M20,30 L30,30" stroke="#8e44ad" stroke-width="2" />
+    </symbol>
+    
+    <!-- Docker icon -->
+    <symbol id="docker-icon" viewBox="0 0 50 50">
+      <rect x="10" y="10" width="8" height="8" fill="#7f8c8d" />
+      <rect x="19" y="10" width="8" height="8" fill="#7f8c8d" />
+      <rect x="28" y="10" width="8" height="8" fill="#7f8c8d" />
+      <rect x="10" y="19" width="8" height="8" fill="#7f8c8d" />
+      <rect x="19" y="19" width="8" height="8" fill="#7f8c8d" />
+      <rect x="28" y="19" width="8" height="8" fill="#7f8c8d" />
+      <rect x="37" y="19" width="8" height="8" fill="#7f8c8d" />
+      <path d="M8,32 C8,32 5,40 15,42 C25,44 40,42 42,32" stroke="#7f8c8d" stroke-width="2" fill="none" />
+    </symbol>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="white" id="background" />
+
+  <!-- Title -->
+  <text x="400" y="40" class="title" text-anchor="middle">GOETL Architecture</text>
+  <text x="400" y="60" class="subtitle" text-anchor="middle">Modern ETL for LLM Dataset Preparation</text>
+
+  <!-- Go Backend -->
+  <rect x="100" y="100" width="240" height="140" class="component go-component" />
+  <rect x="120" y="115" width="30" height="30" class="icon-bg" />
+  <use href="#go-icon" x="120" y="115" width="30" height="30" />
+  <text x="160" y="135" class="component-title">Go Backend</text>
+  <text x="120" y="165" class="component-description">High-performance ETL engine for</text>
+  <text x="120" y="185" class="component-description">extracting, transforming, and loading data</text>
+  <text x="120" y="205" class="component-description">with REST API for programmatic access</text>
+  
+  <!-- React Frontend -->
+  <rect x="460" y="100" width="240" height="140" class="component react-component" />
+  <rect x="480" y="115" width="30" height="30" class="icon-bg" />
+  <use href="#react-icon" x="480" y="115" width="30" height="30" />
+  <text x="520" y="135" class="component-title">React Frontend</text>
+  <text x="480" y="165" class="component-description">User-friendly web interface for</text>
+  <text x="480" y="185" class="component-description">configuring and monitoring ETL jobs</text>
+  <text x="480" y="205" class="component-description">with drag &amp; drop file uploads</text>
+  
+  <!-- Caddy Server -->
+  <rect x="280" y="300" width="240" height="120" class="component caddy-component" />
+  <rect x="300" y="315" width="30" height="30" class="icon-bg" />
+  <use href="#caddy-icon" x="300" y="315" width="30" height="30" />
+  <text x="340" y="335" class="component-title">Caddy Server</text>
+  <text x="300" y="365" class="component-description">Serves static UI assets and acts as</text>
+  <text x="300" y="385" class="component-description">reverse proxy for the API endpoints</text>
+  
+  <!-- Docker & Kubernetes -->
+  <rect x="100" y="450" width="600" height="40" class="component docker-component" />
+  <rect x="120" y="455" width="30" height="30" class="icon-bg" />
+  <use href="#docker-icon" x="120" y="455" width="30" height="30" />
+  <text x="160" y="475" class="component-title">Docker &amp; Kubernetes</text>
+  <text x="400" y="475" class="component-description" text-anchor="middle">Containerized deployment and orchestration</text>
+  
+  <!-- Connection arrows -->
+  <!-- Go Backend to Caddy -->
+  <path d="M220 240 L220 280 L280 300" class="arrow" />
+  
+  <!-- React Frontend to Caddy -->
+  <path d="M580 240 L580 280 L520 300" class="arrow" />
+  
+  <!-- User to Caddy -->
+  <path d="M400 270 L400 300" class="arrow" />
+  <text x="405" y="285" class="component-description">User requests</text>
+  
+  <!-- Caddy to Docker -->
+  <path d="M400 420 L400 450" class="arrow" />
+  
+  <!-- Data flow labels -->
+  <text x="235" y="265" class="component-description" transform="rotate(-45 235 265)">API Requests</text>
+  <text x="565" y="265" class="component-description" transform="rotate(45 565 265)">UI Assets</text>
+  <text x="415" y="435" class="component-description">Deployment</text>
+  
+  <!-- User icon -->
+  <circle cx="400" cy="250" r="15" fill="#34495e" />
+  <circle cx="400" cy="235" r="7" fill="#ecf0f1" />
+  <path d="M385 255 Q400 275 415 255" stroke="#ecf0f1" stroke-width="2" fill="none" />
+</svg>
